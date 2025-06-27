@@ -1,4 +1,5 @@
 # request cfscrape needed
+# output path = /storage/emulated/0/hits/
 
 import os
 import datetime
