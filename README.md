@@ -1,2 +1,2 @@
-Gui modules = tk cfscrape requests
-cli modules = requests cfscrape
+Gui = tk cfscrape requests
+cli = requests cfscrape
