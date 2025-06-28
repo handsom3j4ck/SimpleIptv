@@ -1,3 +1,5 @@
+# requests cloudscraper
+
 import os
 import sys
 import time
@@ -26,9 +28,9 @@ requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = (
 
 # Initialize HTTP session
 try:
-    import cfscrape
+    import cloudscraper
     sesq = requests.Session()
-    session = cfscrape.create_scraper(sess=sesq)
+    session = cloudscraper.create_scraper(sess=sesq)
 except:
     session = requests.Session()
 logging.captureWarnings(True)
