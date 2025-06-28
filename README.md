@@ -1,3 +1,3 @@
-Gui = tk cfscrape requests
+Gui = tk cloudscraper requests
 
-cli = requests cfscrape
+cli = requests cloudscraper
