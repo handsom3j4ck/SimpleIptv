@@ -1,5 +1,5 @@
-# request cfscrape needed
-# output path = /storage/emulated/0/hits/
+# request cloudscraper
+# default output path /storage/emulated/0/hits/
 
 import os
 import datetime
@@ -36,9 +36,9 @@ requests.packages.urllib3.util.ssl_.DEFAULT_CIPHERS = (
 
 # Initialize HTTP session
 try:
-    import cfscrape
+    import cloudscraper
     sesq = requests.Session()
-    session = cfscrape.create_scraper(sess=sesq)
+    session = cloudscraper.create_scraper(sess=sesq)
 except:
     session = requests.Session()
 logging.captureWarnings(True)
@@ -128,7 +128,7 @@ def test_endpoint(portal, endpoint, path=""):
         if any(re.search(pattern, text_snippet, re.IGNORECASE) for pattern in false_positive_patterns):
             return False, ""
 
-        # Check for specific IPTV portal indicators
+        # Check for specific IPTV portal criteria
         portal_patterns = [
             r'"js_config"', r'"handshake"', r'"get_profile"', r'"token"', 
             r'"stalker_portal"', r'"mag"', r'"stb"', r'"account_info"'
