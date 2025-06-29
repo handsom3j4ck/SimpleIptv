@@ -343,7 +343,7 @@ def format_hit(mac_address, expiration_date):
         # Remove time indication (e.g., '11:59 am')
         expiration_date = re.sub(r'\d{1,2}:\d{2}\s*(?:AM|PM|am|pm)', '', expiration_date, flags=re.IGNORECASE).strip()
 
-        # Check for negative or <7 days
+        # Check for negative or <14 days
         if "Days" in expiration_date:
             days_str = expiration_date.split(" ")[-2]
             try:
@@ -351,8 +351,8 @@ def format_hit(mac_address, expiration_date):
                 if days < 0:
                     print(f"Skipping hit with negative expiration: {mac_address} ({expiration_date})")
                     return
-                if days < 7:
-                    print(f"Skipping hit with less than 7 days: {mac_address} ({expiration_date})")
+                if days < 14:
+                    print(f"Skipping hit with less than 14 days: {mac_address} ({expiration_date})")
                     return
             except ValueError:
                 pass
