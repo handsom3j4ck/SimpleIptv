@@ -1,4 +1,4 @@
-# request cloudscraper
+# request
 # default output path /storage/emulated/0/hits/
 
 import os
@@ -70,7 +70,6 @@ endpoints = [
     "bs.mag.portal.php",
     "portalcc.php",
     "magLoad.php",
-    "ministra/portal.php",
     "portalstb/portal.php",
     "k/portal.php",
     "maglove/portal.php",
@@ -84,7 +83,6 @@ endpoints = [
 paths = [
     "",          # Root
     "/c/",       # Common MAG portal path
-    "/ministra/",        # Ministra portal
     "/portalstb/",       # Portal STB
     "/k/",               # Comet
     "/maglove/",         # Maglove
@@ -246,7 +244,7 @@ def get_user_input():
         base_uri = "/c/"
         portal_endpoint = selected_portal
     else:
-        # Extract path prefix (e.g., /ministra/, /maglove/) without /c/
+        # Extract path prefix (e.g., /maglove/) without /c/
         path_prefix = '/'.join(selected_portal.split('/')[:-1]) + '/'
         base_uri = f"/{path_prefix.lstrip('/')}" if path_prefix != '/' else "/c/"
         portal_endpoint = selected_portal
