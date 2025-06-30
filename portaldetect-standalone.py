@@ -43,7 +43,6 @@ endpoints = [
     "bs.mag.portal.php",
     "portalcc.php",
     "magLoad.php",
-    "ministra/portal.php",
     "portalstb/portal.php",
     "k/portal.php",
     "maglove/portal.php",
@@ -57,7 +56,6 @@ endpoints = [
 paths = [
     "",          # Root
     "/c/",       # Common MAG portal path
-    "/ministra/",        # Ministra portal
     "/portalstb/",       # Portal STB
     "/k/",               # Comet
     "/maglove/",         # Maglove
