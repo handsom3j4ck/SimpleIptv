@@ -1,5 +1,5 @@
 # request cloudscraper
-# default output path /storage/emulated/0/hits/
+# output path /storage/emulated/0/hits/
 
 import os
 import datetime
