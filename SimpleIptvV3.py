@@ -1,5 +1,6 @@
 # request cloudscraper
-# output path /storage/emulated/0/hits/
+# output path /storage/emulated/0/hits/ 
+# output path must be changed if your not on Android
 
 import os
 import datetime
