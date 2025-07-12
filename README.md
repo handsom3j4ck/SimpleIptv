@@ -1,10 +1,3 @@
-GUI built with tkinter
-
-CLI support for command-line usage
-
-Uses requests and cloudscraper for flexible HTTP handling
-
-
 DEPENDENCIES
 
 GUI :
