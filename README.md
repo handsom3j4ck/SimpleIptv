@@ -1,8 +1,34 @@
-Gui = tk requests cloudscraper
+GUI built with tkinter
 
-cli = requests cloudscraper
+CLI support for command-line usage
 
-Portaldetect-standalone = requests cloudscraper
+Uses requests and cloudscraper for flexible HTTP handling
 
 
-Portaldetect is already implemented in cli and gui
+Dependencies
+
+GUI Mode:
+
+tkinter
+
+requests
+
+cloudscraper
+
+
+CLI Mode:
+
+requests
+
+cloudscraper
+
+
+Usage
+
+GUI:
+
+python SimpleIptvV3_gui.py
+
+CLI:
+
+python SimpleIptv.py
