@@ -39,3 +39,5 @@ python portaldetect-standalone.py
 -----------
 
 Portaldetect is already implemented in Cli and GUI
+
+If you're using the CLI on Linux/Windows you have the change the output path look inside the py file default output path is /storage/emulated/0/hits/
