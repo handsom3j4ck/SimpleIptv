@@ -1,18 +1,15 @@
 DEPENDENCIES
 
-GUI :
-
+GUI:
 tkinter
 requests
 cloudscraper
 
-CLI :
-
+CLI:
 requests
 cloudscraper
 
-PORTALDETECT-STANDALONE
-
+PORTALDETECT-STANDALONE:
 requests 
 cloudscraper
 
