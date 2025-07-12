@@ -5,9 +5,9 @@ CLI support for command-line usage
 Uses requests and cloudscraper for flexible HTTP handling
 
 
-Dependencies
+DEPENDENCIES
 
-GUI Mode:
+GUI :
 
 tkinter
 
@@ -15,15 +15,17 @@ requests
 
 cloudscraper
 
+-----------
 
-CLI Mode:
+CLI :
 
 requests
 
 cloudscraper
 
+-----------
 
-Usage
+USAGE
 
 GUI:
 
