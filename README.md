@@ -6,16 +6,12 @@ tkinter
 requests
 cloudscraper
 
------------
-
 CLI :
 
 requests
 cloudscraper
 
------------
-
-Portaldetect-standalone
+PORTALDETECT-STANDALONE
 
 requests 
 cloudscraper
