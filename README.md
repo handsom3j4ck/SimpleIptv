@@ -1,7 +1,7 @@
 DEPENDENCIES
 
 GUI:
-tkinter
+tk
 requests
 cloudscraper
 
