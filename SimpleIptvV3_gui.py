@@ -409,7 +409,7 @@ class Tooltip:
         self.tip_window = tw = tk.Toplevel(self.widget)
         tw.wm_overrideredirect(True)
         tw.wm_geometry(f"+{x}+{y}")
-        label = tk.Label(tw, text=self.text, justify="left", bg="#FFFF99", fg="black", relief="solid", borderwidth=1, font=("Arial", 10))
+        label = tk.Label(tw, text=self.text, justify="left", bg="#2E2E2E", fg="white", relief="solid", borderwidth=1, font=("Arial", 10))
         label.pack()
 
     def hide_tip(self, event):
@@ -421,18 +421,29 @@ class Tooltip:
 class IptvScannerGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("SimpleIptvV3-GUI")
-        self.root.geometry("700x700")
+        self.root.title("SimpleIptvV3 - Enhanced Scanner")
+        self.root.geometry("800x900")
+        self.root.minsize(600, 700)  # Minimum window size for better scaling
         self.root.resizable(True, True)
-        self.root.config(bg="#2C2C2C")  # Dark mode background
+        self.root.configure(bg="#1E1E1E")  # Modern dark background
 
-        # Main frame for centering
-        main_frame = tk.Frame(self.root, bg="#2C2C2C")
-        main_frame.pack(fill='both', pady=20, padx=20, expand=True)
+        # Configure style for modern look
+        style = ttk.Style()
+        style.theme_use("clam")  # Use 'clam' for customizable theme
+        style.configure("TButton", font=("Arial", 12), padding=10, background="#3A3A3A", foreground="white")
+        style.map("TButton", background=[("active", "#4A4A4A")])
+        style.configure("TCombobox", font=("Arial", 12), padding=5)
+        style.configure("Treeview", font=("Arial", 11), rowheight=25, background="#2E2E2E", foreground="white", fieldbackground="#2E2E2E")
+        style.configure("Treeview.Heading", font=("Arial", 12, "bold"), background="#3A3A3A", foreground="white")
+        style.map("Treeview.Heading", background=[("active", "#4A4A4A")])
+
+        # Main frame with padding and dynamic expansion
+        main_frame = tk.Frame(self.root, bg="#1E1E1E")
+        main_frame.pack(fill="both", padx=20, pady=20, expand=True)
 
         # Variables
         self.server_url = tk.StringVar(value="")
-        self.mac_prefix = tk.StringVar(value="00:1A:79")  # Default MAC prefix without trailing colon
+        self.mac_prefix = tk.StringVar(value="00:1A:79")
         self.scan_attempts = tk.StringVar(value="1000")
         self.bot_count = tk.StringVar(value="5")
         self.output_file = tk.StringVar(value="")
@@ -441,82 +452,161 @@ class IptvScannerGUI:
         self.current_scan_attempts = 0
         self.found_endpoints = []
 
-        # Input frame
-        input_frame = tk.Frame(main_frame, bg="#2C2C2C")
-        input_frame.pack(fill='x', pady=10)
-        input_frame.columnconfigure(1, weight=1)
+        # Input frame with grid layout for responsiveness
+        input_frame = tk.Frame(main_frame, bg="#1E1E1E")
+        input_frame.pack(fill="x", pady=10)
+        input_frame.columnconfigure(1, weight=1)  # Make entry fields expand
 
-        tk.Label(input_frame, text="Portal URL:", font=("Arial", 12), bg="#2C2C2C", fg="white").grid(row=0, column=0, padx=5, pady=5, sticky="e")
-        self.server_url_entry = tk.Entry(input_frame, textvariable=self.server_url, width=50, font=("Arial", 12))
-        self.server_url_entry.grid(row=0, column=1, padx=5, pady=5, sticky="ew")
+        # Input fields with modern styling
+        tk.Label(input_frame, text="Portal URL:", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="#FFFFFF").grid(row=0, column=0, padx=10, pady=8, sticky="e")
+        self.server_url_entry = tk.Entry(input_frame, textvariable=self.server_url, font=("Arial", 12), bg="#2E2E2E", fg="white", insertbackground="white", relief="flat", borderwidth=2)
+        self.server_url_entry.grid(row=0, column=1, padx=10, pady=8, sticky="ew")
         Tooltip(self.server_url_entry, "Enter the IPTV portal URL (e.g., example.com/stalker_portal)")
 
-        tk.Label(input_frame, text="MAC Prefix:", font=("Arial", 12), bg="#2C2C2C", fg="white").grid(row=1, column=0, padx=5, pady=5, sticky="e")
-        self.mac_prefix_entry = tk.Entry(input_frame, textvariable=self.mac_prefix, width=50, font=("Arial", 12))
-        self.mac_prefix_entry.grid(row=1, column=1, padx=5, pady=5, sticky="ew")
+        tk.Label(input_frame, text="MAC Prefix:", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="#FFFFFF").grid(row=1, column=0, padx=10, pady=8, sticky="e")
+        self.mac_prefix_entry = tk.Entry(input_frame, textvariable=self.mac_prefix, font=("Arial", 12), bg="#2E2E2E", fg="white", insertbackground="white", relief="flat", borderwidth=2)
+        self.mac_prefix_entry.grid(row=1, column=1, padx=10, pady=8, sticky="ew")
         Tooltip(self.mac_prefix_entry, "Enter MAC prefix in XX:XX:XX format (default: 00:1A:79)")
 
-        tk.Label(input_frame, text="Scan Attempts:", font=("Arial", 12), bg="#2C2C2C", fg="white").grid(row=2, column=0, padx=5, pady=5, sticky="e")
-        self.scan_attempts_entry = tk.Entry(input_frame, textvariable=self.scan_attempts, width=50, font=("Arial", 12))
-        self.scan_attempts_entry.grid(row=2, column=1, padx=5, pady=5, sticky="ew")
+        tk.Label(input_frame, text="Scan Attempts:", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="#FFFFFF").grid(row=2, column=0, padx=10, pady=8, sticky="e")
+        self.scan_attempts_entry = tk.Entry(input_frame, textvariable=self.scan_attempts, font=("Arial", 12), bg="#2E2E2E", fg="white", insertbackground="white", relief="flat", borderwidth=2)
+        self.scan_attempts_entry.grid(row=2, column=1, padx=10, pady=8, sticky="ew")
         Tooltip(self.scan_attempts_entry, "Number of MAC addresses to scan (positive integer)")
 
-        tk.Label(input_frame, text="Bot Count (1-15):", font=("Arial", 12), bg="#2C2C2C", fg="white").grid(row=3, column=0, padx=5, pady=5, sticky="e")
-        self.bot_count_entry = tk.Entry(input_frame, textvariable=self.bot_count, width=50, font=("Arial", 12))
-        self.bot_count_entry.grid(row=3, column=1, padx=5, pady=5, sticky="ew")
+        tk.Label(input_frame, text="Bot Count (1-15):", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="#FFFFFF").grid(row=3, column=0, padx=10, pady=8, sticky="e")
+        self.bot_count_entry = tk.Entry(input_frame, textvariable=self.bot_count, font=("Arial", 12), bg="#2E2E2E", fg="white", insertbackground="white", relief="flat", borderwidth=2)
+        self.bot_count_entry.grid(row=3, column=1, padx=10, pady=8, sticky="ew")
         Tooltip(self.bot_count_entry, "Number of parallel scan threads (1-15)")
 
-        # Portal type detection frame
-        portal_frame = tk.Frame(main_frame, bg="#2C2C2C")
-        portal_frame.pack(fill='x', pady=10)
+        # Portal detection frame
+        portal_frame = tk.Frame(main_frame, bg="#1E1E1E")
+        portal_frame.pack(fill="x", pady=10)
 
         tk.Button(portal_frame, text="Detect Portal", command=self.detect_portal, font=("Arial", 12)).pack(side="left", padx=10)
-        tk.Label(portal_frame, text="Portal Type:", font=("Arial", 12), bg="#2C2C2C", fg="white").pack(side="left", padx=5)
-        self.portal_combobox = ttk.Combobox(portal_frame, textvariable=self.portal_type, state="readonly", width=30, font=("Arial", 12))
-        self.portal_combobox.pack(side="left", padx=5)
+        tk.Label(portal_frame, text="Portal Type:", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="#FFFFFF").pack(side="left", padx=10)
+        self.portal_combobox = ttk.Combobox(portal_frame, textvariable=self.portal_type, state="readonly", font=("Arial", 12), style="TCombobox")
+        self.portal_combobox.pack(side="left", padx=10, fill="x", expand=True)
         Tooltip(self.portal_combobox, "Select detected portal type")
 
-        # Button frame
-        button_frame = tk.Frame(main_frame, bg="#2C2C2C")
-        button_frame.pack(pady=10)
-
+        # Output file selection
+        button_frame = tk.Frame(main_frame, bg="#1E1E1E")
+        button_frame.pack(fill="x", pady=10)
         tk.Button(button_frame, text="Select Output File", command=self.select_output_file, font=("Arial", 12)).pack(pady=5)
-        tk.Label(button_frame, textvariable=self.output_file, wraplength=500, font=("Arial", 10), bg="#2C2C2C", fg="white").pack(pady=5)
+        self.output_label = tk.Label(button_frame, textvariable=self.output_file, wraplength=600, font=("Arial", 10), bg="#1E1E1E", fg="#BBBBBB")
+        self.output_label.pack(pady=5)
 
-        # Action buttons
-        action_frame = tk.Frame(main_frame, bg="#2C2C2C")
-        action_frame.pack(pady=10)
-
-        self.start_button = tk.Button(action_frame, text="Start Scan", command=self.start_scan, font=("Arial", 12))
+        # Action buttons with modern layout
+        action_frame = tk.Frame(main_frame, bg="#1E1E1E")
+        action_frame.pack(fill="x", pady=15)
+        self.start_button = tk.Button(action_frame, text="Start Scan", command=self.start_scan, font=("Arial", 12), bg="#4CAF50", fg="white", relief="flat", width=12)
         self.start_button.pack(side="left", padx=10)
-
-        self.stop_button = tk.Button(action_frame, text="Stop Scan", command=self.stop_scan, state="disabled", font=("Arial", 12))
+        self.stop_button = tk.Button(action_frame, text="Stop Scan", command=self.stop_scan, state="disabled", font=("Arial", 12), bg="#F44336", fg="white", relief="flat", width=12)
         self.stop_button.pack(side="left", padx=10)
-
-        self.pause_button = tk.Button(action_frame, text="Pause Scan", command=self.toggle_pause, state="disabled", font=("Arial", 12))
+        self.pause_button = tk.Button(action_frame, text="Pause Scan", command=self.toggle_pause, state="disabled", font=("Arial", 12), bg="#FFC107", fg="white", relief="flat", width=12)
         self.pause_button.pack(side="left", padx=10)
 
-        # Status label
-        self.status_label = tk.Label(main_frame, text="Status: Idle", justify="left", font=("Arial", 12), bg="#2C2C2C", fg="white")
-        self.status_label.pack(pady=10)
+        # Status label with improved visibility
+        self.status_label = tk.Label(main_frame, text="Status: Idle", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="#4CAF50", anchor="w")
+        self.status_label.pack(fill="x", pady=10)
 
-        # Hits frame
-        hits_frame = tk.Frame(main_frame, bg="#2C2C2C")
-        hits_frame.pack(fill='both', pady=10, expand=True)
+        # Hits frame with dynamic scaling
+        hits_frame = tk.Frame(main_frame, bg="#1E1E1E")
+        hits_frame.pack(fill="both", pady=10, expand=True)
+        tk.Label(hits_frame, text="Hits:", font=("Arial", 14, "bold"), bg="#1E1E1E", fg="#FFFFFF").pack(anchor="w", pady=5)
 
-        tk.Label(hits_frame, text="Hits:", font=("Arial", 12), bg="#2C2C2C", fg="white").pack(anchor="w")
-        self.hit_table = ttk.Treeview(hits_frame, columns=("Date", "Portal", "MAC", "Valid Until"), show="headings")
+        # Treeview for hits with scrollbars
+        self.hit_table = ttk.Treeview(hits_frame, columns=("Date", "Portal", "MAC", "Valid Until"), show="headings", style="Treeview")
         self.hit_table.heading("Date", text="Scan Date")
         self.hit_table.heading("Portal", text="Portal URL")
         self.hit_table.heading("MAC", text="MAC Address")
         self.hit_table.heading("Valid Until", text="Valid Until")
-        self.hit_table.pack(padx=5, pady=5, fill='both', expand=True)
-        scrollbar = ttk.Scrollbar(hits_frame, orient="vertical", command=self.hit_table.yview)
-        self.hit_table.configure(yscrollcommand=scrollbar.set)
-        scrollbar.pack(side="right", fill="y")
+        self.hit_table.column("Date", width=150, anchor="center")
+        self.hit_table.column("Portal", width=250, anchor="w")
+        self.hit_table.column("MAC", width=150, anchor="center")
+        self.hit_table.column("Valid Until", width=150, anchor="center")
+        self.hit_table.pack(fill="both", padx=5, pady=5, expand=True)
+
+        # Add both vertical and horizontal scrollbars
+        v_scrollbar = ttk.Scrollbar(hits_frame, orient="vertical", command=self.hit_table.yview)
+        h_scrollbar = ttk.Scrollbar(hits_frame, orient="horizontal", command=self.hit_table.xview)
+        self.hit_table.configure(yscrollcommand=v_scrollbar.set, xscrollcommand=h_scrollbar.set)
+        v_scrollbar.pack(side="right", fill="y")
+        h_scrollbar.pack(side="bottom", fill="x")
 
         # Start polling for hits
         self.update_hits()
+
+        # Bind resize event for dynamic column scaling
+        self.root.bind("<Configure>", self.adjust_column_widths)
+
+    def adjust_column_widths(self, event):
+        """Dynamically adjust Treeview column widths based on window size."""
+        window_width = self.root.winfo_width()
+        total_width = max(600, window_width - 100)  # Ensure minimum width
+        self.hit_table.column("Date", width=int(total_width * 0.2))
+        self.hit_table.column("Portal", width=int(total_width * 0.4))
+        self.hit_table.column("MAC", width=int(total_width * 0.2))
+        self.hit_table.column("Valid Until", width=int(total_width * 0.2))
+
+    def show_portal_dialog(self, portal_count, portal_list):
+        """Display a custom dialog with scrollable portal types."""
+        dialog = tk.Toplevel(self.root)
+        dialog.title("Portal Detection")
+        dialog.geometry("500x400")
+        dialog.minsize(400, 300)
+        dialog.configure(bg="#1E1E1E")
+        dialog.transient(self.root)  # Set to be on top of main window
+        dialog.grab_set()  # Make dialog modal
+
+        # Main frame for dialog
+        dialog_frame = tk.Frame(dialog, bg="#1E1E1E")
+        dialog_frame.pack(fill="both", padx=20, pady=20, expand=True)
+
+        # Title
+        tk.Label(
+            dialog_frame,
+            text=f"Found {portal_count} Portal Type{'s' if portal_count != 1 else ''}",
+            font=("Arial", 14, "bold"),
+            bg="#1E1E1E",
+            fg="#FFFFFF"
+        ).pack(anchor="w", pady=5)
+
+        # Scrollable text area for portal types
+        text_frame = tk.Frame(dialog_frame, bg="#1E1E1E")
+        text_frame.pack(fill="both", pady=10, expand=True)
+        text_area = scrolledtext.ScrolledText(
+            text_frame,
+            wrap=tk.WORD,
+            font=("Arial", 12),
+            bg="#2E2E2E",
+            fg="white",
+            height=10,
+            relief="flat",
+            borderwidth=2
+        )
+        text_area.pack(fill="both", expand=True)
+        text_area.insert(tk.END, "\n".join([f"- {endpoint}" for endpoint in portal_list]))
+        text_area.config(state="disabled")  # Make read-only
+
+        # OK button
+        tk.Button(
+            dialog_frame,
+            text="OK",
+            command=dialog.destroy,
+            font=("Arial", 12),
+            bg="#4CAF50",
+            fg="white",
+            relief="flat",
+            width=10
+        ).pack(pady=10)
+
+        # Bind resize event for dynamic scaling
+        def adjust_dialog_size(event):
+            window_width = max(400, dialog.winfo_width())
+            window_height = max(300, dialog.winfo_height())
+            text_area.config(width=int(window_width / 10), height=int(window_height / 40))
+        
+        dialog.bind("<Configure>", adjust_dialog_size)
 
     def select_output_file(self):
         global output_file
@@ -558,6 +648,9 @@ class IptvScannerGUI:
             self.found_endpoints = ["c/portal.php"]
             self.portal_type.set("c/portal.php")
         else:
+            # Display found portal types and count in a custom dialog
+            portal_count = len(self.found_endpoints)
+            self.show_portal_dialog(portal_count, self.found_endpoints)
             self.portal_combobox['values'] = self.found_endpoints
             self.portal_type.set(self.found_endpoints[0])  # Default to first detected
 
@@ -729,7 +822,7 @@ class IptvScannerGUI:
     def update_status(self):
         global total_scans, hit_count, scan_running
         if scan_running:
-            self.status_label.config(text=f"Scan: {total_scans}/{self.current_scan_attempts}\nHits: {hit_count}")
+            self.status_label.config(text=f"Scan: {total_scans}/{self.current_scan_attempts} | Hits: {hit_count}")
             self.root.after(50, self.update_status)
 
 if __name__ == "__main__":
