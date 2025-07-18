@@ -19,7 +19,7 @@ USAGE
 
 GUI:
 
-python SimpleIptvV3_gui.py
+python SimpleIptvGUI.py
 
 CLI:
 
