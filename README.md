@@ -24,6 +24,7 @@ This project provides a MAC address bruteforce tool for IPTV services, offering 
   - **Debian/Ubuntu**: `sudo apt-get install python3-pip`
   - **Arch Linux**: `sudo pacman -S python-pip`
   - **Windows**: Pip is included with Python 3.x installations. Ensure Python is added to your system PATH during installation.
+  - **Android-Termux**: `pkg install python-pip`
 
 ### CLI Version
 
@@ -38,6 +39,7 @@ This project provides a MAC address bruteforce tool for IPTV services, offering 
   - **Debian/Ubuntu**: `sudo apt-get install python3-pip`
   - **Arch Linux**: `sudo pacman -S python-pip`
   - **Windows**: Pip is included with Python 3.x installations. Ensure Python is added to your system PATH during installation.
+  - **Android-Termux**: `pkg install python-pip`
 
 ### PortalDetect
 
@@ -52,6 +54,7 @@ This project provides a MAC address bruteforce tool for IPTV services, offering 
   - **Debian/Ubuntu**: `sudo apt-get install python3-pip`
   - **Arch Linux**: `sudo pacman -S python-pip`
   - **Windows**: Pip is included with Python 3.x installations. Ensure Python is added to your system PATH during installation.
+  - **Android-Termux**: `pkg install python-pip`
 
 ## Usage
 
@@ -75,34 +78,11 @@ python SimpleIptv.py
 
 The CLI is fully interactive, guiding you through the process without additional command-line arguments.
 
-**Android-Termux**: To run the CLI version on Android using Termux, follow these steps:
-
-1. Install Termux from the Google Play Store or F-Droid.
-
-2. Update Termux and install Python:
-
-   ```bash
-   pkg update && pkg upgrade
-   pkg install python python-pip
-   ```
-
-3. Install the required Python packages:
-
-   ```bash
-   pip install requests cloudscraper
-   ```
-
-4. Run the CLI script:
-
-   ```bash
-   python SimpleIptv.py
-   ```
-
 **Note**: The default output path for results is `/storage/emulated/0/hits/`. To change this:
 
 - Open `SimpleIptv.py` in a text editor.
 - Locate the output path variable (e.g., `output_path`) and modify it to your desired directory.
-- Ensure the path is valid for your operating system (Linux/Windows)
+- Ensure the path is valid for your operating system (Linux/Windows).
 
 ### PortalDetect
 
