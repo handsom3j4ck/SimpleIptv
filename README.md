@@ -4,21 +4,15 @@ GUI:
 
 tk (install it with package manager)
 
-requests (install with pip)
-
-cloudscraper (install with pip)
+requests cloudscraper (install with pip)
 
 CLI:
 
-requests (install with pip)
-
-cloudscraper (install with pip)
+requests cloudscraper (install with pip)
 
 PORTALDETECT-STANDALONE:
 
-requests (install with pip)
-
-cloudscraper (install with pip)
+requests cloudscraper (install with pip)
 
 -----------
 USAGE
