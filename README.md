@@ -62,7 +62,7 @@ The CLI is fully interactive, guiding you through the process without additional
 ### PortalDetect
 Run the standalone portal detection script with:
 ```bash
-python PortalDetect-.py
+python PortalDetect.py
 ```
 This script is also integrated into both the GUI and CLI versions, so you may not need to run it separately.
 
