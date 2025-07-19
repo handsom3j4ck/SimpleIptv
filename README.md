@@ -28,7 +28,7 @@ This project provides a MAC address bruteforce tool for IPTV services, offering 
   - **Fedora**: `sudo dnf install python3-pip`
   - **Arch Linux**: `sudo pacman -S python-pip`
 
-### PortalDetect Standalone
+### PortalDetect
 - **requests** and **cloudscraper**: Install via pip:
   ```bash
   pip install requests cloudscraper
@@ -59,10 +59,10 @@ The CLI is fully interactive, guiding you through the process without additional
 - Locate the output path variable (e.g., `output_path`) and modify it to your desired directory.
 - Ensure the path is valid for your operating system (Linux/Windows).
 
-### PortalDetect Standalone
+### PortalDetect
 Run the standalone portal detection script with:
 ```bash
-python portaldetect-standalone.py
+python PortalDetect-.py
 ```
 This script is also integrated into both the GUI and CLI versions, so you may not need to run it separately.
 
