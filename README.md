@@ -11,6 +11,7 @@ This project provides a MAC address bruteforce tool for IPTV services, offering 
   - **Debian/Ubuntu**: `sudo apt-get install python3-tk`
   - **Arch Linux**: `sudo pacman -S tk`
   - **Windows**: Tkinter is included with Python 3.x installations. Ensure Python is installed from python.org.
+  - **Android-Termux**: The GUI version is not supported on Android-Termux due to limitations with Tkinter on mobile platforms.
 
 - **requests** and **cloudscraper**: Install via pip:
 
@@ -62,6 +63,8 @@ Run the graphical interface with:
 python SimpleIptvGUI.py
 ```
 
+**Note**: The GUI version is not supported on Android-Termux due to Tkinter limitations on mobile platforms.
+
 ### CLI
 
 Run command-line interface with:
@@ -72,11 +75,34 @@ python SimpleIptv.py
 
 The CLI is fully interactive, guiding you through the process without additional command-line arguments.
 
+**Android-Termux**: To run the CLI version on Android using Termux, follow these steps:
+
+1. Install Termux from the Google Play Store or F-Droid.
+
+2. Update Termux and install Python:
+
+   ```bash
+   pkg update && pkg upgrade
+   pkg install python python-pip
+   ```
+
+3. Install the required Python packages:
+
+   ```bash
+   pip install requests cloudscraper
+   ```
+
+4. Run the CLI script:
+
+   ```bash
+   python SimpleIptv.py
+   ```
+
 **Note**: The default output path for results is `/storage/emulated/0/hits/`. To change this:
 
 - Open `SimpleIptv.py` in a text editor.
 - Locate the output path variable (e.g., `output_path`) and modify it to your desired directory.
-- Ensure the path is valid for your operating system (Linux/Windows).
+- Ensure the path is valid for your operating system (Linux/Windows)
 
 ### PortalDetect
 
@@ -91,5 +117,5 @@ python PortalDetect.py
 ## Additional Notes
 
 - **Pre-built AppImages available**
-- **Cross-Platform Compatibility**: Ensure the output path is correctly set for your operating system, especially on Linux or Windows, as the default path (`/storage/emulated/0/hits/`) is Android-specific.
+- **Cross-Platform Compatibility**: Ensure the output path is correctly set for your operating system, especially on Linux, Windows, as the default path (`/storage/emulated/0/hits/`) is Android-specific.
 - **Python Version**: This project requires Python 3.x. Ensure you have it installed before running the scripts.
