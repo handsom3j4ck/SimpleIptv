@@ -13,18 +13,30 @@ This project provides a MAC address bruteforce tool for IPTV services, offering 
   ```bash
   pip install requests cloudscraper
   ```
+- **python-pip**: Required to install Python packages. Install using your system's package manager:
+  - **Debian/Ubuntu**: `sudo apt-get install python3-pip`
+  - **Fedora**: `sudo dnf install python3-pip`
+  - **Arch Linux**: `sudo pacman -S python-pip`
 
 ### CLI Version
 - **requests** and **cloudscraper**: Install via pip:
   ```bash
   pip install requests cloudscraper
   ```
+- **python-pip**: Required to install Python packages. Install using your system's package manager:
+  - **Debian/Ubuntu**: `sudo apt-get install python3-pip`
+  - **Fedora**: `sudo dnf install python3-pip`
+  - **Arch Linux**: `sudo pacman -S python-pip`
 
 ### PortalDetect Standalone
 - **requests** and **cloudscraper**: Install via pip:
   ```bash
   pip install requests cloudscraper
   ```
+- **python-pip**: Required to install Python packages. Install using your system's package manager:
+  - **Debian/Ubuntu**: `sudo apt-get install python3-pip`
+  - **Fedora**: `sudo dnf install python3-pip`
+  - **Arch Linux**: `sudo pacman -S python-pip`
 
 ## Usage
 
