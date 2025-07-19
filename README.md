@@ -63,9 +63,9 @@ Run the standalone portal detection script with:
 ```bash
 python PortalDetect.py
 ```
-- **PortalDetect Integration**: The portal detection functionality is already included in both the GUI (`SimpleIptvGUI.py`) and CLI (`SimpleIptv.py`) versions, making the standalone script optional.
+- **The portal detection functionality is already included in both the GUI (`SimpleIptvGUI.py`) and CLI (`SimpleIptv.py`) versions, making the standalone script optional.**
 - 
 ## Additional Notes
-- **AppImage Build**: The provided build scripts for creating an AppImage are tailored for **Arch Linux**. If you're using another distribution, you may need to adapt the scripts or build process.
+AppImage Build**: The provided build scripts for creating an AppImage are tailored for **Arch Linux**. If you're using another distribution, you may need to adapt the scripts or build process.
 - **Cross-Platform Compatibility**: Ensure the output path is correctly set for your operating system, especially on Linux or Windows, as the default path (`/storage/emulated/0/hits/`) is Android-specific.
 - **Python Version**: This project requires Python 3.x. Ensure you have it installed before running the scripts.
