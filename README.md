@@ -1,6 +1,6 @@
 # SimpleIPTV Project
 
-This project provides tools for interacting with IPTV services through a GUI, CLI, or standalone portal detection script. Below are the details for dependencies, usage, and additional notes.
+This project provides a MAC address bruteforce tool for IPTV services, offering a GUI, CLI, or standalone portal detection script to test and identify valid IPTV portal connections. It is intended strictly for educational purposes and should only be used in controlled environments with explicit permission from service providers. Unauthorized use may violate applicable laws and terms of service.
 
 ## Dependencies
 
