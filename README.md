@@ -64,7 +64,7 @@ Run the standalone portal detection script with:
 ```bash
 python PortalDetect.py
 ```
-This script is also integrated into both the GUI and CLI versions, so you may not need to run it separately.
+- **The portal detection functionality is already included in both the GUI and CLI versions, making the standalone script optional.**:
 
 ## Additional Notes
 - **PortalDetect Integration**: The portal detection functionality is already included in both the GUI (`SimpleIptvGUI.py`) and CLI (`SimpleIptv.py`) versions, making the standalone script optional.
