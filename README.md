@@ -24,15 +24,12 @@ cloudscraper (install with pip)
 USAGE
 
 GUI:
-
 python SimpleIptvGUI.py
 
 CLI:
-
 python SimpleIptv.py
 
 PORTALDETECT:
-
 python portaldetect-standalone.py
 
 -----------
