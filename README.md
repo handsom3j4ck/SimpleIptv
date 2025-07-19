@@ -1,13 +1,13 @@
 DEPENDENCIES
 
 GUI:
-tk
-requests
-cloudscraper
+tk (install it with package manager)
+requests (install with pip)
+cloudscraper (install with pip)
 
 CLI:
-requests
-cloudscraper
+requests (install with pip)
+cloudscraper (install with pip)
 
 PORTALDETECT-STANDALONE:
 requests 
