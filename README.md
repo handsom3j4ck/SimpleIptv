@@ -7,7 +7,6 @@ This project provides a MAC address bruteforce tool for IPTV services, offering 
 ### GUI Version
 - **tk**: Required for the graphical user interface. Install using your system's package manager:
   - **Debian/Ubuntu**: `sudo apt-get install python3-tk`
-  - **Fedora**: `sudo dnf install python3-tkinter`
   - **Arch Linux**: `sudo pacman -S tk`
 - **requests** and **cloudscraper**: Install via pip:
   ```bash
@@ -15,7 +14,6 @@ This project provides a MAC address bruteforce tool for IPTV services, offering 
   ```
 - **python-pip**: Required to install Python packages. Install using your system's package manager:
   - **Debian/Ubuntu**: `sudo apt-get install python3-pip`
-  - **Fedora**: `sudo dnf install python3-pip`
   - **Arch Linux**: `sudo pacman -S python-pip`
 
 ### CLI Version
@@ -25,7 +23,6 @@ This project provides a MAC address bruteforce tool for IPTV services, offering 
   ```
 - **python-pip**: Required to install Python packages. Install using your system's package manager:
   - **Debian/Ubuntu**: `sudo apt-get install python3-pip`
-  - **Fedora**: `sudo dnf install python3-pip`
   - **Arch Linux**: `sudo pacman -S python-pip`
 
 ### PortalDetect
@@ -35,7 +32,6 @@ This project provides a MAC address bruteforce tool for IPTV services, offering 
   ```
 - **python-pip**: Required to install Python packages. Install using your system's package manager:
   - **Debian/Ubuntu**: `sudo apt-get install python3-pip`
-  - **Fedora**: `sudo dnf install python3-pip`
   - **Arch Linux**: `sudo pacman -S python-pip`
 
 ## Usage
@@ -66,6 +62,6 @@ python PortalDetect.py
 - **The portal detection functionality is already included in both the GUI (`SimpleIptvGUI.py`) and CLI (`SimpleIptv.py`) versions, making the standalone script optional.**
  
 ## Additional Notes
-**AppImage Build**: The provided build scripts for creating an AppImage are tailored for **Arch Linux**. If you're using another distribution, you may need to adapt the scripts or build process.
+- **Pre-built AppImages available**
 - **Cross-Platform Compatibility**: Ensure the output path is correctly set for your operating system, especially on Linux or Windows, as the default path (`/storage/emulated/0/hits/`) is Android-specific.
 - **Python Version**: This project requires Python 3.x. Ensure you have it installed before running the scripts.
