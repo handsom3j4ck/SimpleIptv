@@ -1,4 +1,5 @@
-# tk requests cloudscraper 
+# tk requests cloudscraper
+# if you want to scan for speccific amount of days search for / # Check for negative or <1 day
 
 import os
 import datetime
@@ -251,14 +252,14 @@ def format_hit(mac_address, expiration_date, hit_queue, server_url, total_scans,
         # Remove time indication (e.g., '11:59 am')
         expiration_date = re.sub(r'\d{1,2}:\d{2}\s*(?:AM|PM|am|pm)', '', expiration_date, flags=re.IGNORECASE).strip()
 
-        # Check for negative or <14 days
+        # Check for negative or <1 day
         if "Days" in expiration_date:
             days_str = expiration_date.split(" ")[-2]
             try:
                 days = int(days_str)
                 if days < 0:
                     return
-                if days < 14:
+                if days < 1:
                     return
             except ValueError:
                 pass
