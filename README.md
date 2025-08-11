@@ -1,6 +1,6 @@
 # SimpleIptv – IPTV Portal Scanner & MAC Brute-Force Tool
 
-**SimpleIptv** is a Python-based tool designed to detect and test IPTV portal endpoints (e.g., MAG/STB portals) by scanning for valid configurations and brute-forcing MAC addresses. It supports **GUI**, **CLI**, and a **standalone portal detection script**, making it accessible for both beginners and advanced users.
+**SimpleIptv** is a fully functional Python-based brute-force tool designed to detect and test IPTV portal endpoints (e.g., MAG/STB portals) by scanning for valid configurations and testing MAC addresses for active accounts. It supports **GUI**, **CLI**, and a **standalone portal detection script**, making it accessible for both beginners and advanced users.
 
 > 🔒 **This tool is strictly for educational and authorized testing purposes only. Unauthorized access to IPTV services or network scanning without permission is illegal.**
 
@@ -38,7 +38,7 @@ This project is intended **only** for:
 | **Multi-threaded Scanning** | Supports up to 15 parallel bots for faster scanning. |
 | **Custom MAC Prefix** | Allows user-defined MAC prefixes (e.g., `00:1A:79:`) for targeted scans. |
 | **Cloudflare Bypass** | Uses `cloudscraper` to handle Cloudflare-protected portals. |
-| **GUI (Tkinter)** | Full-featured graphical interface with real-time hit display, status updates, and dynamic column resizing. |
+| **GUI (Tkinter)** | Full-featured graphical interface with real-time hit display, status updates, and dynamic column resizing. Includes manual output file selection. |
 | **CLI Version** | Interactive command-line interface with progress tracking. |
 | **Standalone PortalDetect** | Lightweight script to detect portal types only (no MAC scanning). |
 
@@ -111,9 +111,9 @@ python SimpleIptvGUI.py
 - Input validation with tooltips
 - Real-time hit table with scrollbars
 - Dynamic column resizing
-- Portal detection dialog
+- Built-in portal detection
 - Pause/resume/stop controls
-- Output file selection
+- **Manual output file selection** (no path editing required)
 
 > 📌 **Note**: GUI not supported on Android-Termux.
 
@@ -132,6 +132,11 @@ The script will guide you through:
 - Detecting portal type
 - Starting the scan
 
+> 🔧 **Output Path Note**:  
+> The default output path is `/storage/emulated/0/hits/` (Android-specific).  
+> **To change it, edit the `output_dir` variable in `SimpleIptv.py` only.**  
+> The GUI version does **not** require code changes — it allows file selection at runtime.
+
 ---
 
 ### 3. PortalDetect (Standalone – Portal Detection Only)
@@ -145,19 +150,6 @@ python PortalDetect.py
 - Outputs detected portal types
 
 > 🔍 **Note**: This functionality is **already included** in both the GUI and CLI versions. Use this script only if you want **portal detection without MAC scanning**.
-
----
-
-## 📁 Output Path
-
-- **Default Output Path**: `/storage/emulated/0/hits/` (Android-specific)
-- **To Change Output Path**:
-  1. Open `SimpleIptv.py` or `SimpleIptvGUI.py` in a text editor
-  2. Locate the `output_dir` or `output_file` variable
-  3. Modify it to your desired path (e.g., `./hits/`, `/home/user/hits/`)
-  4. Ensure the directory exists and is writable
-
-> 💡 **Tip**: In the GUI version, you can **select the output file manually** using the "Select Output File" button.
 
 ---
 
@@ -211,7 +203,6 @@ paths = [
 
 ---
 
-
 ## 🙌 Acknowledgments
 
 - Developers of `cloudscraper` and `requests`
@@ -230,6 +221,6 @@ For issues, suggestions, or responsible disclosure, please open a GitHub Issue.
 
 ## 🏁 Disclaimer
 
-**SimpleIptv** is a proof-of-concept tool for detecting and testing IPTV portal configurations. It is **not designed to exploit vulnerabilities** but to help understand network behavior and improve security.
+**SimpleIptv** is a **fully functional brute-force tool** for detecting and testing IPTV portal configurations. It is **not a proof-of-concept** — it is designed to perform real-world MAC address scanning and account validation.
 
 Always act responsibly. Unauthorized access to systems you do not own or have permission to test is a crime.
