@@ -200,6 +200,3 @@ paths = [
 | No hits found | Try a different portal type or increase scan attempts |
 | Portal detection fails | The server may block requests; try a different URL or check connectivity |
 | Output file not created | Ensure the output directory exists and is writable |
-
----
-> 🔐 **Do not use this tool for malicious purposes. Respect privacy, legality, and ethics.**
