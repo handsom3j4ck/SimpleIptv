@@ -195,7 +195,7 @@ paths = [
 | Issue | Solution |
 |------|----------|
 | `ModuleNotFoundError: No module named 'cloudscraper'` | Run `pip install cloudscraper` |
-| `No module named 'tkinter'` | Install Tkinter: `sudo apt-get install python3-tk` |
+| `No module named 'tkinter'` | Install Tkinter: `sudo apt-get install python3-tk or just tk depends on your distro ` |
 | GUI not opening on Windows | Ensure Python was installed from [python.org](https://python.org) with Tkinter enabled |
 | No hits found | Try a different portal type or increase scan attempts |
 | Portal detection fails | The server may block requests; try a different URL or check connectivity |
