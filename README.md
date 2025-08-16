@@ -202,17 +202,4 @@ paths = [
 | Output file not created | Ensure the output directory exists and is writable |
 
 ---
-
-## 🙌 Acknowledgments
-
-- Developers of `cloudscraper` and `requests`
-- Open-source community for inspiration and feedback
-- Security researchers in the IPTV and STB ecosystem
-
----
-
-## 📬 Contact
-
-For issues, suggestions, or responsible disclosure, please open a GitHub Issue.
-
 > 🔐 **Do not use this tool for malicious purposes. Respect privacy, legality, and ethics.**
