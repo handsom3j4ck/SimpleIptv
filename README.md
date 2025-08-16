@@ -216,11 +216,3 @@ paths = [
 For issues, suggestions, or responsible disclosure, please open a GitHub Issue.
 
 > 🔐 **Do not use this tool for malicious purposes. Respect privacy, legality, and ethics.**
-
----
-
-## 🏁 Disclaimer
-
-**SimpleIptv** is a **fully functional brute-force tool** for detecting and testing IPTV portal configurations. It is **not a proof-of-concept** — it is designed to perform real-world MAC address scanning and account validation.
-
-Always act responsibly. Unauthorized access to systems you do not own or have permission to test is a crime.
