@@ -2,11 +2,11 @@
 
 **SimpleIptv** is a fully functional Python-based brute-force tool designed to detect and test IPTV portal endpoints (e.g., MAG/STB portals) by scanning for valid configurations and testing MAC addresses for active accounts. It supports **GUI**, **CLI**, and a **standalone portal detection script**, making it accessible for both beginners and advanced users.
 
-> 🔒 **This tool is strictly for educational and authorized testing purposes only. Unauthorized access to IPTV services or network scanning without permission is illegal.**
+> **This tool is strictly for educational and authorized testing purposes only. Unauthorized access to IPTV services or network scanning without permission is illegal.**
 
 ---
 
-## ⚠️ Legal and Ethical Warning
+## Legal and Ethical Warning
 
 This project is intended **only** for:
 - Educational research
@@ -19,16 +19,16 @@ This project is intended **only** for:
 - **Digital Millennium Copyright Act (DMCA)**
 - **ISP and service provider terms of service**
 
-> 🛑 **The author and contributors are not responsible for any misuse, legal consequences, or damages resulting from unauthorized use.**
+> **The author and contributors are not responsible for any misuse, legal consequences, or damages resulting from unauthorized use.**
 
-### ✅ Always:
+### Always:
 - Obtain **written consent** before testing any system.
 - Use in **isolated, authorized environments**.
 - Respect **privacy, data ownership, and local laws**.
 
 ---
 
-## 📦 Features
+## Features
 
 | Feature | Description |
 |--------|-------------|
@@ -42,11 +42,11 @@ This project is intended **only** for:
 | **CLI Version** | Interactive command-line interface with progress tracking. |
 | **Standalone PortalDetect** | Lightweight script to detect portal types only (no MAC scanning). |
 
-> 🔗 **Note**: The **PortalDetect** functionality is already built into both the **GUI** and **CLI** versions. The standalone script is optional for users who only want endpoint detection.
+> **Note**: The **PortalDetect** functionality is already built into both the **GUI** and **CLI** versions. The standalone script is optional for users who only want endpoint detection.
 
 ---
 
-## 📦 Dependencies
+## Dependencies
 
 ### Required for All Versions
 - **Python 3.6+**
@@ -75,7 +75,7 @@ pip install requests cloudscraper
 
 ---
 
-## 🛠️ Installation
+## Installation
 
 1. **Clone the Repository**
    ```bash
@@ -99,7 +99,7 @@ pip install requests cloudscraper
 
 ---
 
-## 🎯 Usage
+## Usage
 
 ### 1. GUI Version (Recommended for Beginners)
 Launch the graphical interface:
@@ -115,7 +115,7 @@ python SimpleIptvGUI.py
 - Pause/resume/stop controls
 - **Manual output file selection** (no path editing required)
 
-> 📌 **Note**: GUI not supported on Android-Termux.
+> **Note**: GUI not supported on Android-Termux.
 
 ---
 
@@ -132,7 +132,7 @@ The script will guide you through:
 - Detecting portal type
 - Starting the scan
 
-> 🔧 **Output Path Note**:  
+> **Output Path Note**:  
 > The default output path is `/storage/emulated/0/hits/` (Android-specific).  
 > **To change it, edit the `output_dir` variable in `SimpleIptv.py` only.**  
 > The GUI version does **not** require code changes — it allows file selection at runtime.
@@ -149,11 +149,11 @@ python PortalDetect.py
 - Automatically detects valid endpoints (e.g., `c/portal.php`, `server/load.php`)
 - Outputs detected portal types
 
-> 🔍 **Note**: This functionality is **already included** in both the GUI and CLI versions. Use this script only if you want **portal detection without MAC scanning**.
+> **Note**: This functionality is **already included** in both the GUI and CLI versions. Use this script only if you want **portal detection without MAC scanning**.
 
 ---
 
-## ⚙️ Customization
+## Customization
 
 ### Filter Hits by Expiration
 To skip accounts with less than 1 day remaining, search for:
@@ -190,7 +190,7 @@ paths = [
 
 ---
 
-## 🛑 Troubleshooting
+## Troubleshooting
 
 | Issue | Solution |
 |------|----------|
@@ -199,4 +199,4 @@ paths = [
 | GUI not opening on Windows | Ensure Python was installed from [python.org](https://python.org) with Tkinter enabled |
 | No hits found | Try a different portal type or increase scan attempts |
 | Portal detection fails | The server may block requests; try a different URL or check connectivity |
-| Output file not created | Ensure the output directory exists and is writable |
+| Output file not created | Ensure the output directory exists and is writable
