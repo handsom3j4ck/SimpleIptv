@@ -35,7 +35,7 @@ This project is intended **only** for:
 | **Portal Detection** | Automatically scans for valid IPTV portal endpoints (e.g., `c/portal.php`, `portalstb/portal.php`) using intelligent pattern matching. |
 | **MAC Address Brute-Force** | Generates and tests random MAC addresses to find valid accounts. |
 | **Expiration Detection** | Parses account expiration dates and filters hits by validity (e.g., skips accounts with less than 1 day remaining). |
-| **Multi-threaded Scanning** | Supports up to 15 parallel bots for faster scanning. |
+| **Multi-threaded Scanning** | Supports parallel bots for faster scanning. |
 | **Custom MAC Prefix** | Allows user-defined MAC prefixes (e.g., `00:1A:79:`) for targeted scans. |
 | **Cloudflare Bypass** | Uses `cloudscraper` to handle Cloudflare-protected portals. |
 | **GUI (Tkinter)** | Full-featured graphical interface with real-time hit display, status updates, and dynamic column resizing. Includes manual output file selection. |
