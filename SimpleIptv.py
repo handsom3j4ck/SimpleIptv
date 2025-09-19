@@ -192,10 +192,10 @@ def get_user_input():
 
     while True:
         try:
-            bot_count = int(input("Number of bots (max 15): "))
-            if 0 < bot_count <= 15:
+            bot_count = int(input("Number of bots: "))
+            if bot_count > 0:
                 break
-            print("Please enter a number between 1 and 15.")
+            print("Please enter a positive number.")
         except ValueError:
             print("Please enter a valid number.")
 
