@@ -422,7 +422,7 @@ class Tooltip:
 class IptvScannerGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("SimpleIptvV3 - Enhanced Scanner")
+        self.root.title("SimpleIptvGUI")
         self.root.geometry("800x900")
         self.root.minsize(600, 700)  # Minimum window size for better scaling
         self.root.resizable(True, True)
@@ -474,10 +474,10 @@ class IptvScannerGUI:
         self.scan_attempts_entry.grid(row=2, column=1, padx=10, pady=8, sticky="ew")
         Tooltip(self.scan_attempts_entry, "Number of MAC addresses to scan (positive integer)")
 
-        tk.Label(input_frame, text="Bot Count (1-15):", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="#FFFFFF").grid(row=3, column=0, padx=10, pady=8, sticky="e")
+        tk.Label(input_frame, text="Bot Count:", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="#FFFFFF").grid(row=3, column=0, padx=10, pady=8, sticky="e")
         self.bot_count_entry = tk.Entry(input_frame, textvariable=self.bot_count, font=("Arial", 12), bg="#2E2E2E", fg="white", insertbackground="white", relief="flat", borderwidth=2)
         self.bot_count_entry.grid(row=3, column=1, padx=10, pady=8, sticky="ew")
-        Tooltip(self.bot_count_entry, "Number of parallel scan threads (1-15)")
+        Tooltip(self.bot_count_entry, "Number of parallel scan threads")
 
         # Portal detection frame
         portal_frame = tk.Frame(main_frame, bg="#1E1E1E")
@@ -683,8 +683,8 @@ class IptvScannerGUI:
 
         try:
             bot_count = int(self.bot_count.get())
-            if not 0 < bot_count <= 15:
-                messagebox.showerror("Error", "Bot count must be between 1 and 15.")
+            if bot_count <= 0:
+                messagebox.showerror("Error", "Bot count must be a positive number.")
                 return False
         except ValueError:
             messagebox.showerror("Error", "Invalid number for bot count.")
