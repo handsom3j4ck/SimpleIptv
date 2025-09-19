@@ -1,7 +1,7 @@
 # request cloudscraper
 # output path /storage/emulated/0/hits/ 
 # output path must be changed if your not on Android
-# if you want to scan for speccific amount of days search for / Skipping hit with less than 1 day
+# if you want to scan for speccific amount of days search for / Skipping hit with less than 0 days
 
 import os
 import datetime
@@ -343,7 +343,7 @@ def format_hit(mac_address, expiration_date):
         # Remove time indication (e.g., '11:59 am')
         expiration_date = re.sub(r'\d{1,2}:\d{2}\s*(?:AM|PM|am|pm)', '', expiration_date, flags=re.IGNORECASE).strip()
 
-        # Check for negative or <14 days
+        # Check for negative or <0 days
         if "Days" in expiration_date:
             days_str = expiration_date.split(" ")[-2]
             try:

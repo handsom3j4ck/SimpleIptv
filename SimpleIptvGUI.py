@@ -252,7 +252,7 @@ def format_hit(mac_address, expiration_date, hit_queue, server_url, total_scans,
         # Remove time indication (e.g., '11:59 am')
         expiration_date = re.sub(r'\d{1,2}:\d{2}\s*(?:AM|PM|am|pm)', '', expiration_date, flags=re.IGNORECASE).strip()
 
-        # Check for negative or <1 day
+        # Check for negative or <0 day
         if "Days" in expiration_date:
             days_str = expiration_date.split(" ")[-2]
             try:
