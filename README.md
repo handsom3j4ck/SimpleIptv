@@ -153,7 +153,7 @@ python PortalDetect.py
 ### Filter Hits by Expiration
 To skip accounts with less than 1 day remaining, search for:
 ```python
-# Check for negative or <1 day
+# Check for negative or <0 day
 ```
 You can modify the condition to:
 - Skip accounts with less than 7 days: `if days < 7:`
