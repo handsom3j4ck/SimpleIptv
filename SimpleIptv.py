@@ -1,6 +1,4 @@
 # request cloudscraper
-# output path /storage/emulated/0/hits/ 
-# output path must be changed if your not on Android
 # if you want to scan for speccific amount of days search for / Skipping hit with less than 0 days
 
 import os
@@ -17,6 +15,7 @@ import hashlib
 import json
 import socket
 import logging
+import platform
 from concurrent.futures import ThreadPoolExecutor
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 
@@ -482,7 +481,11 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Set up output file path
-    output_dir = "/storage/emulated/0/hits/"
+    if platform.system() == 'Linux' and os.path.exists('/storage/emulated/0'):
+        output_dir = "/storage/emulated/0/hits/"
+    else:
+        home = os.path.expanduser("~")
+        output_dir = os.path.join(home, "Downloads", "hits")
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     output_file = output_dir + server_url.replace(":", "_").replace('/', '') + "_SimpleIptv_" + time.strftime('%d-%m-%Y') + ".txt"
