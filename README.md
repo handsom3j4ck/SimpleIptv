@@ -151,13 +151,13 @@ python PortalDetect.py
 ## Customization
 
 ### Filter Hits by Expiration
-To skip accounts with less than 1 day remaining, search for:
+To skip accounts with less than 0 days remaining, search for:
 ```python
 # Check for negative or <0 day
 ```
 You can modify the condition to:
-- Skip accounts with less than 7 days: `if days < 7:`
-- Skip expired accounts only: `if days < 0:`
+- Skip accounts with less than 7 days: `if days <7:`
+- Skip expired accounts only: `if days <0:`
 
 ### Add Custom MAC Prefixes
 Edit the `mac_prefixes` list in any script:
