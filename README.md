@@ -132,11 +132,6 @@ The script will guide you through:
 - Detecting portal type
 - Starting the scan
 
-> **Output Path Note**:  
-> The default output path is `/storage/emulated/0/hits/` (Android-specific).  
-> **To change it, edit the `output_dir` variable in `SimpleIptv.py` only.**  
-> The GUI version does **not** require code changes — it allows file selection at runtime.
-
 ---
 
 ### 3. PortalDetect (Standalone – Portal Detection Only)
