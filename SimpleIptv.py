@@ -1,5 +1,4 @@
 # request cloudscraper
-# if you want to scan for speccific amount of days search for / Skipping hit with less than 0 days
 
 import os
 import datetime
