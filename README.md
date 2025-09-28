@@ -107,14 +107,6 @@ Launch the graphical interface:
 python SimpleIptvGUI.py
 ```
 
-**Features:**
-- Input validation with tooltips
-- Real-time hit table with scrollbars
-- Dynamic column resizing
-- Built-in portal detection
-- Pause/resume/stop controls
-- **Manual output file selection** (no path editing required)
-
 > **Note**: GUI not supported on Android-Termux.
 
 ---
@@ -125,14 +117,7 @@ Run the command-line interface:
 python SimpleIptv.py
 ```
 
-The script will guide you through:
-- Entering the portal URL
-- Selecting scan attempts and bot count
-- Choosing a MAC prefix (optional)
-- Detecting portal type
-- Starting the scan
-- Hits txt will be saved in Downloads on Linux/Android/Windows
-
+fully interactive
 ---
 
 ### 3. PortalDetect (Standalone – Portal Detection Only)
@@ -141,9 +126,7 @@ Run the lightweight portal detection script:
 python PortalDetect.py
 ```
 
-- Enter a portal URL
-- Automatically detects valid endpoints (e.g., `c/portal.php`, `server/load.php`)
-- Outputs detected portal types
+fully interactive
 
 > **Note**: This functionality is **already included** in both the GUI and CLI versions. Use this script only if you want **portal detection without MAC scanning**.
 
