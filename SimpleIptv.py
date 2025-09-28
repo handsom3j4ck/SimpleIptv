@@ -501,7 +501,7 @@ if __name__ == "__main__":
 
     # Set up output file path
     if platform.system() == 'Linux' and os.path.exists('/storage/emulated/0'):
-        output_dir = "/storage/emulated/0/Downloads/"
+        output_dir = "/storage/emulated/0/Download/"
     else:
         home = os.path.expanduser("~")
         output_dir = os.path.join(home, "Downloads")
