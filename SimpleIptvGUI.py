@@ -14,6 +14,7 @@ import hashlib
 import json
 import socket
 import logging
+import platform
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
 import tkinter as tk
 from tkinter import ttk, filedialog, messagebox, scrolledtext
