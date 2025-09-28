@@ -1,5 +1,4 @@
 # tk requests cloudscraper
-# if you want to scan for speccific amount of days search for # Check for negative or <0 day
 
 import os
 import datetime
