@@ -131,7 +131,7 @@ The script will guide you through:
 - Choosing a MAC prefix (optional)
 - Detecting portal type
 - Starting the scan
-- Hits will be saved in Downloads/hits/ on linux and windows on android its /storage/emulated/0/hits/
+- Hits txt will be saved in Downloads on Linux/Android/Windows
 
 ---
 
