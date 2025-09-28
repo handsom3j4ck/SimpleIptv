@@ -54,7 +54,7 @@ scan_attempts = 0
 bot_count = 0
 default_mac_prefix = '00:1A:79:'
 use_stalker_c = True  # Control whether stalker portals append /c/
-min_days = 1
+min_days = 0
 lock = threading.Lock()
 
 # Predefined MAC prefixes
@@ -208,13 +208,13 @@ def get_user_input():
             print("Invalid MAC prefix format. Using default")
 
     # Prompt for minimum days
-    min_days_input = input("Minimum days to save hit [default: 1]: ").strip()
+    min_days_input = input("Minimum days to save hit [default: 0]: ").strip()
     if min_days_input:
         try:
             min_days = int(min_days_input)
         except ValueError:
             print("Invalid number. Using default.")
-    # Else default is 1
+    # Else default is 0
 
     # Detect portal types
     found_endpoints = detect_endpoints(server_url)

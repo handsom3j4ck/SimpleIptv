@@ -62,7 +62,7 @@ pause_condition = threading.Condition()
 threads = []
 server_url = ""
 use_stalker_c = True  # Control whether stalker portals append /c/
-min_days = 1
+min_days = 0
 lock = threading.Lock()
 
 # Predefined MAC prefixes
@@ -452,9 +452,9 @@ class IptvScannerGUI:
         # Variables
         self.server_url = tk.StringVar(value="")
         self.mac_prefix = tk.StringVar(value="00:1A:79")
-        self.scan_attempts = tk.StringVar(value="1000")
-        self.bot_count = tk.StringVar(value="5")
-        self.min_days = tk.StringVar(value="1")
+        self.scan_attempts = tk.StringVar(value="")
+        self.bot_count = tk.StringVar(value="")
+        self.min_days = tk.StringVar(value="")
         self.output_file = tk.StringVar(value="")
         self.portal_type = tk.StringVar(value="")
         self.hit_queue = Queue()
