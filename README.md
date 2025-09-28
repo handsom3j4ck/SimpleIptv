@@ -118,6 +118,7 @@ python SimpleIptv.py
 ```
 
 fully interactive
+
 ---
 
 ### 3. PortalDetect (Standalone – Portal Detection Only)
