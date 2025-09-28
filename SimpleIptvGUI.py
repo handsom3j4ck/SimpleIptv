@@ -470,7 +470,7 @@ class IptvScannerGUI:
         tk.Label(input_frame, text="Portal URL:", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="#FFFFFF").grid(row=0, column=0, padx=10, pady=8, sticky="e")
         self.server_url_entry = tk.Entry(input_frame, textvariable=self.server_url, font=("Arial", 12), bg="#2E2E2E", fg="white", insertbackground="white", relief="flat", borderwidth=2)
         self.server_url_entry.grid(row=0, column=1, padx=10, pady=8, sticky="ew")
-        Tooltip(self.server_url_entry, "Enter the IPTV portal URL (e.g., example.com/stalker_portal)")
+        Tooltip(self.server_url_entry, "Enter the IPTV portal URL (e.g., http://target.com:8080)")
 
         tk.Label(input_frame, text="MAC Prefix:", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="#FFFFFF").grid(row=1, column=0, padx=10, pady=8, sticky="e")
         self.mac_prefix_entry = tk.Entry(input_frame, textvariable=self.mac_prefix, font=("Arial", 12), bg="#2E2E2E", fg="white", insertbackground="white", relief="flat", borderwidth=2)
@@ -490,7 +490,7 @@ class IptvScannerGUI:
         tk.Label(input_frame, text="Minimum Days:", font=("Arial", 12, "bold"), bg="#1E1E1E", fg="#FFFFFF").grid(row=4, column=0, padx=10, pady=8, sticky="e")
         self.min_days_entry = tk.Entry(input_frame, textvariable=self.min_days, font=("Arial", 12), bg="#2E2E2E", fg="white", insertbackground="white", relief="flat", borderwidth=2)
         self.min_days_entry.grid(row=4, column=1, padx=10, pady=8, sticky="ew")
-        Tooltip(self.min_days_entry, "Minimum days to save hit (default: 1)")
+        Tooltip(self.min_days_entry, "Minimum days to save hit (default: 0")
 
         # Portal detection frame
         portal_frame = tk.Frame(main_frame, bg="#1E1E1E")
