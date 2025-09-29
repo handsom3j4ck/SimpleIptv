@@ -40,6 +40,7 @@ endpoints = [
     "c/portal.php",               # Most common MAG portal
     "portal.php",                 # Common fallback
     "server/load.php",            # Common for stalker portals
+    "load.php",
     "bs.mag.portal.php",
     "portalcc.php",
     "magLoad.php",
@@ -51,6 +52,18 @@ endpoints = [
     "portalmega.php",
     "magportal/portal.php",
     "powerfull/portal.php",
+    "stb/portal.php",             # Additional STB variant
+    "mag/portal.php",             # Direct MAG path
+    "api/portal.php",             # API-based endpoint
+    "cms/portal.php",             # CMS-integrated portal
+    "iptv/portal.php",            # IPTV-specific
+    "player_api.php",             # Common for player APIs (e.g., Xtream)
+    "panel_api.php",              # Panel access API
+    "get.php",                    # Generic data fetcher
+    "mag_loader.php",             # MAG loader variant
+    "portal/portal.php",          # Nested portal
+    "auth.php",                   # Authentication endpoint
+    "vip/portal.php",             # VIP or premium portal
 ]
 
 paths = [
@@ -62,6 +75,15 @@ paths = [
     "/p/",               # Generic p
     "/magaccess/",       # Magaccess
     "/powerfull/",       # Powerfull
+    "/server/",          # test
+    "/stb/",             # STB base path
+    "/mag/",             # MAG base
+    "/api/",             # API directory
+    "/iptv/",            # IPTV directory
+    "/bs/",              # BS variant base
+    "/mega/",            # Mega portal base
+    "/load/",            # Load directory
+    "/portal/"           # Generic portal path
 ]
 
 # User-agent for requests
