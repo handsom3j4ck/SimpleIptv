@@ -117,6 +117,7 @@ Run the command-line interface:
 python SimpleIptv.py
 ```
 
+> **Note**:
 fully interactive
 Hits are saved in Downloads on Linux/Android/Windows
 
@@ -128,7 +129,7 @@ Run the lightweight portal detection script:
 python PortalDetect.py
 ```
 
-fully interactive
+> **Note**: fully interactive
 
 > **Note**: This functionality is **already included** in both the GUI and CLI versions. Use this script only if you want **portal detection without MAC scanning**.
 
