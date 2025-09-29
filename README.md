@@ -118,6 +118,7 @@ python SimpleIptv.py
 ```
 
 fully interactive
+Hits are saved in Downloads on Linux/Android/Windows
 
 ---
 
