@@ -500,14 +500,18 @@ if __name__ == "__main__":
         sys.exit(1)
 
     # Set up output file path
-    if platform.system() == 'Linux' and os.path.exists('/storage/emulated/0'):
-        output_dir = "/storage/emulated/0/Download/"
+    from pathlib import Path
+
+    if platform.system() == 'Linux' and Path('/storage/emulated/0').exists():
+        output_dir = Path("/storage/emulated/0/Download/")
     else:
-        home = os.path.expanduser("~")
-        output_dir = os.path.join(home, "Downloads")
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-    output_file = output_dir + server_url.replace(":", "_").replace('/', '') + "_SimpleIptv_" + time.strftime('%d-%m-%Y') + ".txt"
+        home = Path.home()
+        output_dir = home / "Downloads"
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    sanitized_url = server_url.replace(":", "_").replace('/', '')
+    output_file = str(output_dir / f"{sanitized_url}_SimpleIptv_{time.strftime('%d-%m-%Y')}.txt")
 
     # Start scanning bots
     try:
