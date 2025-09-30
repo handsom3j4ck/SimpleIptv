@@ -222,13 +222,30 @@ def month_string_to_number(month):
 # Parse expiration date to calculate days remaining
 def parse_expiration_date(date_str):
     try:
-        month = str(date_str.split(' ')[0])
-        day = str(date_str.split(', ')[0].split(' ')[1])
-        year = str(date_str.split(', ')[1])
-        month_num = str(month_string_to_number(month))
-        date_obj = datetime.date(int(year), int(month_num), int(day))
-        timestamp = time.mktime(date_obj.timetuple())
-        return int((timestamp - time.time()) / 86400)
+        # Normalize by removing commas and extra spaces
+        date_str = date_str.replace(',', '').strip()
+        parts = re.split(r'\s+', date_str)
+        if len(parts) != 3:
+            return None
+
+        month = day = year = None
+        # Try Month DD YYYY
+        if parts[0].isalpha():
+            month = month_string_to_number(parts[0])
+            day = int(parts[1])
+            year = int(parts[2])
+        # Try DD Month YYYY
+        elif parts[1].isalpha():
+            day = int(parts[0])
+            month = month_string_to_number(parts[1])
+            year = int(parts[2])
+
+        if month and day and year:
+            date_obj = datetime.date(year, month, day)
+            timestamp = time.mktime(date_obj.timetuple())
+            return int((timestamp - time.time()) / 86400)
+        else:
+            return None
     except:
         return None
 
@@ -393,16 +410,18 @@ def scan_bot(bot_number, scan_attempts, bot_count, server_url, mac_prefix, statu
                         except:
                             pass
 
-                    if raw_expiration:
+                    if raw_expiration.strip():
                         # Remove time indication (e.g., '11:59 am')
                         raw_expiration = re.sub(r'\d{1,2}:\d{2}\s*(?:AM|PM|am|pm)', '', raw_expiration, flags=re.IGNORECASE).strip()
 
                         expiration_date = raw_expiration
                         days = None
-                        if raw_expiration.lower().startswith('un'):
+                        lower_exp = raw_expiration.lower()
+                        if lower_exp.startswith('un') or lower_exp in ['unlimited', 'never', 'lifetime']:
                             days = float('inf')
                             expiration_date = "Unlimited"
                         else:
+                            # Try parse as Month day YYYY or DD Month YYYY
                             days = parse_expiration_date(raw_expiration)
                             if days is not None:
                                 expiration_date = f"{raw_expiration} ({days} Days)"
