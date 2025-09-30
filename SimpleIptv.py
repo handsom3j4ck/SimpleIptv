@@ -320,29 +320,30 @@ def month_string_to_number(month):
 # Parse expiration date to calculate days remaining
 def parse_expiration_date(date_str):
     try:
-        # Handle both "Month day, year" and "Month day year"
-        parts = date_str.split(', ')
-        if len(parts) == 2:
-            # With comma: "May 24, 2024"
-            month_day = parts[0].split(' ')
-            if len(month_day) == 2:
-                month = month_day[0]
-                day = month_day[1]
-                year = parts[1]
-            else:
-                raise ValueError('Invalid date format')
-        else:
-            # Without comma: "May 24 2024"
-            parts = date_str.split(' ')
-            if len(parts) == 3:
-                month, day, year = parts
-            else:
-                raise ValueError('Invalid date format')
+        # Normalize by removing commas and extra spaces
+        date_str = date_str.replace(',', '').strip()
+        parts = re.split(r'\s+', date_str)
+        if len(parts) != 3:
+            return None
 
-        month_num = month_string_to_number(month)
-        date_obj = datetime.date(int(year), month_num, int(day))
-        timestamp = time.mktime(date_obj.timetuple())
-        return int((timestamp - time.time()) / 86400)
+        month = day = year = None
+        # Try Month DD YYYY
+        if parts[0].isalpha():
+            month = month_string_to_number(parts[0])
+            day = int(parts[1])
+            year = int(parts[2])
+        # Try DD Month YYYY
+        elif parts[1].isalpha():
+            day = int(parts[0])
+            month = month_string_to_number(parts[1])
+            year = int(parts[2])
+
+        if month and day and year:
+            date_obj = datetime.date(year, month, day)
+            timestamp = time.mktime(date_obj.timetuple())
+            return int((timestamp - time.time()) / 86400)
+        else:
+            return None
     except:
         return None
 
@@ -498,34 +499,43 @@ def scan_bot(bot_number):
                         except:
                             pass
 
-                    if raw_expiration:
+                    if raw_expiration.strip():
                         # Remove time indication (e.g., '11:59 am')
                         raw_expiration = re.sub(r'\d{1,2}:\d{2}\s*(?:AM|PM|am|pm)', '', raw_expiration, flags=re.IGNORECASE).strip()
 
                         expiration_date = raw_expiration
                         days = None
-                        if raw_expiration.lower().startswith('un'):
+                        lower_exp = raw_expiration.lower()
+                        if lower_exp.startswith('un') or lower_exp in ['unlimited', 'never', 'lifetime']:
                             days = float('inf')
                             expiration_date = "Unlimited"
                         else:
-                            # Try parse as Month day, year (with or without comma)
+                            # Try parse as Month day YYYY or DD Month YYYY
                             days = parse_expiration_date(raw_expiration)
                             if days is not None:
                                 expiration_date = f"{raw_expiration} ({days} Days)"
                             else:
-                                # Try YYYY-MM-DD
-                                try:
-                                    date_obj = datetime.datetime.strptime(raw_expiration, '%Y-%m-%d')
-                                    days = (date_obj - datetime.datetime.now()).days
-                                    expiration_date = f"{raw_expiration} ({days} Days)"
-                                except:
-                                    pass
+                                # Try numeric formats
+                                numeric_formats = ['%Y-%m-%d', '%d-%m-%Y', '%m-%d-%Y', '%Y/%m/%d', '%d/%m/%Y', '%m/%d/%Y']
+                                for fmt in numeric_formats:
+                                    try:
+                                        date_obj = datetime.datetime.strptime(raw_expiration, fmt)
+                                        days = (date_obj - datetime.datetime.now()).days
+                                        expiration_date = f"{raw_expiration} ({days} Days)"
+                                        break
+                                    except ValueError:
+                                        pass
+                                if days is None:
+                                    expiration_date = "Unknown"
 
                         if days is not None:
                             if days < min_days:
                                 print(f"Skipping hit with less than {min_days} days: {mac_address} ({expiration_date})")
                                 continue
                         format_hit(mac_address, expiration_date)
+                    else:
+                        # If no expiration date found, treat as unknown
+                        format_hit(mac_address, "Unknown")
 
 # Main execution
 if __name__ == "__main__":
