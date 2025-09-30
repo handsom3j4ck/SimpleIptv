@@ -236,8 +236,7 @@ def parse_expiration_date(date_str):
 # Generate random MAC address
 def generate_mac(prefix=default_mac_prefix):
     try:
-        mac = f"{prefix}%02X:%02X:%02X" % (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-        mac = mac.replace(':100', ':10')
+        mac = f"{prefix}{random.randint(0, 255):02X}:{random.randint(0, 255):02X}:{random.randint(0, 255):02X}"
         return mac
     except:
         return f"{prefix}00:00:00"
