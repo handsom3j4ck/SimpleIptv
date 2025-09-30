@@ -104,7 +104,6 @@ paths = [
     "/p/",               # Generic p
     "/magaccess/",       # Magaccess
     "/powerfull/",       # Powerfull
-    "/server/",          # test
     "/stb/",             # STB base path
     "/mag/",             # MAG base
     "/api/",             # API directory

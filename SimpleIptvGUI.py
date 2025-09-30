@@ -115,7 +115,6 @@ paths = [
     "/p/",               # Generic p
     "/magaccess/",       # Magaccess
     "/powerfull/",       # Powerfull
-    "/server/",          # test
     "/stb/",             # STB base path
     "/mag/",             # MAG base
     "/api/",             # API directory
@@ -223,27 +222,11 @@ def month_string_to_number(month):
 # Parse expiration date to calculate days remaining
 def parse_expiration_date(date_str):
     try:
-        # Handle both "Month day, year" and "Month day year"
-        parts = date_str.split(', ')
-        if len(parts) == 2:
-            # With comma: "May 24, 2024"
-            month_day = parts[0].split(' ')
-            if len(month_day) == 2:
-                month = month_day[0]
-                day = month_day[1]
-                year = parts[1]
-            else:
-                raise ValueError('Invalid date format')
-        else:
-            # Without comma: "May 24 2024"
-            parts = date_str.split(' ')
-            if len(parts) == 3:
-                month, day, year = parts
-            else:
-                raise ValueError('Invalid date format')
-
-        month_num = month_string_to_number(month)
-        date_obj = datetime.date(int(year), month_num, int(day))
+        month = str(date_str.split(' ')[0])
+        day = str(date_str.split(', ')[0].split(' ')[1])
+        year = str(date_str.split(', ')[1])
+        month_num = str(month_string_to_number(month))
+        date_obj = datetime.date(int(year), int(month_num), int(day))
         timestamp = time.mktime(date_obj.timetuple())
         return int((timestamp - time.time()) / 86400)
     except:
