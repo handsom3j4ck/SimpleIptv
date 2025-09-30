@@ -426,12 +426,18 @@ def scan_bot(bot_number, scan_attempts, bot_count, server_url, mac_prefix, statu
                             if days is not None:
                                 expiration_date = f"{raw_expiration} ({days} Days)"
                             else:
-                                try:
-                                    date_obj = datetime.datetime.strptime(raw_expiration, '%Y-%m-%d')
-                                    days = (date_obj - datetime.datetime.now()).days
-                                    expiration_date = f"{raw_expiration} ({days} Days)"
-                                except:
-                                    pass
+                                # Try numeric formats
+                                numeric_formats = ['%Y-%m-%d', '%d-%m-%Y', '%m-%d-%Y', '%Y/%m/%d', '%d/%m/%Y', '%m/%d/%Y']
+                                for fmt in numeric_formats:
+                                    try:
+                                        date_obj = datetime.datetime.strptime(raw_expiration, fmt)
+                                        days = (date_obj - datetime.datetime.now()).days
+                                        expiration_date = f"{raw_expiration} ({days} Days)"
+                                        break
+                                    except ValueError:
+                                        pass
+                                if days is None:
+                                    expiration_date = "Unknown"
 
                         if days is not None:
                             if days < min_days:
